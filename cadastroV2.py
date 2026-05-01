@@ -48,4 +48,4 @@ while True:
         else:
             break
     else:
-        
+        escolha = int(input("Selecione uma opção:\n1-ver usuário"))
