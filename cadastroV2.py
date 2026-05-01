@@ -2,8 +2,9 @@ import os
 import sqlite3
 import hashlib
 import getpass as gp
+from jogo import jogo
 
-connect = sqlite3.Connection("programaçao/Contas.db")
+connect = sqlite3.Connection("Contas.db")
 cursor = connect.cursor()
 
 cursor.execute("""CREATE TABLE IF NOT EXISTS contas_users(
@@ -14,6 +15,8 @@ cursor.execute("""CREATE TABLE IF NOT EXISTS contas_users(
                )""")
 # cursor.execute("""INSERT INTO contas_users(
 #                usuario, senha, logado) VALUES ('paulo', 'victor', 0)""")
+
+logado = 0
 
 while True: 
     print("Bem-vindo ao nosso site!")
@@ -41,16 +44,32 @@ while True:
                 cursor.execute("""SELECT logado FROM contas_users WHERE usuario = ? and senha = ?""", (userlog, senhalog))
                 logado = cursor.fetchone()
                 print("\nParabéns, você foi logado!\n")
+                os.system('cls')
             else:
                 print("\nUsuário ou senha incorretos\n")
-        else:
+        elif 3:
             break
+        else:
+            print("Escolha incorreta!")
+            continue
     else:
-        escolha = int(input("Selecione uma opção:\n1-ver usuário\n2-logout\n3-sair"))
+        escolha = int(input("Selecione uma opção:\n1-ver usuário\n2-logout\n3-jogar!\n4-sair\n"))
         if escolha == 1:
             cursor.execute("""SELECT id, usuario, senha FROM contas_users
                             WHERE usuario = ? AND senha = ?""", (userlog, senhalog,))
-            info = cursor.fetchone()
+            info = cursor.fetchall()
             for usuario in info:
-                id, nome, senha = usuario
-                print(f"id: {id}\nnome: {nome}\nsenha: {senha}")
+                id_user, nome, senha = usuario
+                print(f"\nid: {id_user}\nnome: {nome}\nsenha: {senha}\n")
+        elif escolha == 2:
+            cursor.execute("""UPDATE contas_users SET logado = 0
+                            WHERE usuario = ? AND senha = ?""", (userlog, senhalog,))
+            connect.commit()
+            os.system('cls')
+        elif 3:
+            jogo()
+        elif escolha == 4:
+            break
+        else:
+            print("Escolha incorreta!")
+            continue
