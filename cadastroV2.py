@@ -15,8 +15,6 @@ cursor.execute("""CREATE TABLE IF NOT EXISTS contas_users(
 # cursor.execute("""INSERT INTO contas_users(
 #                usuario, senha, logado) VALUES ('paulo', 'victor', 0)""")
 
-logado = 0
-
 while True: 
     print("Bem-vindo ao nosso site!")
     if logado == 0:  
@@ -48,4 +46,11 @@ while True:
         else:
             break
     else:
-        escolha = int(input("Selecione uma opção:\n1-ver usuário"))
+        escolha = int(input("Selecione uma opção:\n1-ver usuário\n2-logout\n3-sair"))
+        if escolha == 1:
+            cursor.execute("""SELECT id, usuario, senha FROM contas_users
+                            WHERE usuario = ? AND senha = ?""", (userlog, senhalog,))
+            info = cursor.fetchone()
+            for usuario in info:
+                id, nome, senha = usuario
+                print(f"id: {id}\nnome: {nome}\nsenha: {senha}")
