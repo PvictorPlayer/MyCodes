@@ -37,4 +37,3 @@ def jogo():
             return
         else:
             return
-jogo()
