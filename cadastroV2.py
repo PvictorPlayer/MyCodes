@@ -51,7 +51,6 @@ while True:
             break
         else:
             print("Escolha incorreta!")
-            continue
     else:
         escolha = int(input("Selecione uma opção:\n1-ver usuário\n2-logout\n3-jogar!\n4-sair\n"))
         if escolha == 1:
@@ -64,6 +63,7 @@ while True:
         elif escolha == 2:
             cursor.execute("""UPDATE contas_users SET logado = 0
                             WHERE usuario = ? AND senha = ?""", (userlog, senhalog,))
+            logado = 0
             connect.commit()
             os.system('cls')
         elif 3:
@@ -72,4 +72,3 @@ while True:
             break
         else:
             print("Escolha incorreta!")
-            continue
