@@ -65,7 +65,10 @@ while True:
                             WHERE usuario = ? AND senha = ?""", (userlog, senhalog,))
             logado = 0
             connect.commit()
-            os.system('cls')
+            if os.name == 'nt':
+                os.system('cls')
+            else:
+                os.system('clear')
         elif 3:
             jogo()
         elif escolha == 4:
