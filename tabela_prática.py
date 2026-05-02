@@ -72,15 +72,37 @@ class aplicativo(ctk.CTk):
         if not texto.strip():
             return 0
         try:
-            numeros = texto.replace(",", ".").split()
-            return sum(map(float, numeros))
+            numeros = texto.split()
+            total = 0
+
+            for n in numeros:
+                n = n.replace(".", "")
+                n = n.replace(",", ".")
+                total += float(n)
+
+            return float(total)
         except:
             return 0
+        
+    def formatar(self, valor):
+        try:
+            valor = float(valor)
+        except:
+            return "erro"
+        texto = f"{valor:,.2f}"
+        texto = texto.replace(",", "X").replace(".", ",").replace("X", ".")
+        return f"R$ {texto}"
     def pegar(self):
-        self.pref.configure(text=f"Prefeitura: {self.somar(self.prefeitura.get())}")
-        self.assis.configure(text=f"Assistência: {self.somar(self.assistencia.get())}")
-        self.sau.configure(text=f"Saúde: {self.somar(self.saude.get())}")
-        self.educ.configure(text=f"Educação: {self.somar(self.educacao.get())}")
+
+        pref = self.somar(self.prefeitura.get())
+        assis = self.somar(self.assistencia.get())
+        sau = self.somar(self.saude.get())
+        educ = self.somar(self.educacao.get())
+
+        self.pref.configure(text=f"Prefeitura: {self.formatar(pref)}")
+        self.assis.configure(text=f"Assistência: {self.formatar(assis)}")
+        self.sau.configure(text=f"Saúde: {self.formatar(sau)}")
+        self.educ.configure(text=f"Educação: {self.formatar(educ)}")
     def botao(self):
         self.button = ctk.CTkButton(self.principal,
                                text="Solicitar",
