@@ -19,6 +19,14 @@ class aplicativo(ctk.CTk):
 
         self.construir()
 
+        self.pegarPref()
+
+        self.pegarAssis()
+
+        self.pegarSaude()
+
+        self.pegarEduc()
+
         self.botao()
 
     def construir(self):
@@ -67,43 +75,51 @@ class aplicativo(ctk.CTk):
                                  text="")
         self.educacao.pack()
         self.educ.pack()
-
-    def pegar(self):
+        
+    def pegarPref(self):
         self.prefeituraget = self.prefeitura.get()
-        self.assistenciaget = self.assistencia.get()
-        self.saudeget = self.saude.get()
-        self.educacaoget = self.educacao.get()
+
         if self.prefeituraget != "":
             pref_int = (self.prefeituraget) 
+            pref_int = pref_int.replace(',', '.')
+        pref_int = list(map(float, pref_int.split()))
+        self.preftotal = sum(pref_int)
+
+        self.pref.configure(text=f"Prefeitura: {self.preftotal}")
+
+    def pegarAssis(self):
+        self.assistenciaget = self.assistencia.get()
 
         if self.assistenciaget != "":
             assis_int = (self.assistenciaget)
 
-        if self.saudeget != "":
-            saude_int = (self.saudeget)
-
-        if self.educacaoget != "":
-            educ_int = (self.educacaoget)
-
-        pref_int = pref_int.replace(',', '.')
-        pref_int = list(map(float, pref_int.split()))
-        self.preftotal = sum(pref_int)
-
         assis_int = assis_int.replace(',', '.')
         assis_int = list(map(float, assis_int.split()))
         self.assistotal = sum(assis_int)
+
+        self.assis.configure(text=f"Assistência: {self.assistotal}")
+
+    def pegarSaude(self):
+
+        self.saudeget = self.saude.get()
+        if self.saudeget != "":
+            saude_int = (self.saudeget)
         
         saude_int = saude_int.replace(',', '.')
         saude_int = list(map(float, saude_int.split()))
         self.saudetotal = sum(saude_int)
 
+        self.sau.configure(text=f"Saúde: {self.saudetotal}")
+
+    def pegarEduc(self):
+        self.educacaoget = self.educacao.get()
+        if self.educacaoget != "":
+            educ_int = (self.educacaoget)
+
         educ_int = educ_int.replace(',', '.')
         educ_int = list(map(float, educ_int.split()))
         self.eductotal = sum(educ_int)
 
-        self.pref.configure(text=f"Prefeitura: {self.preftotal}")
-        self.assis.configure(text=f"Assistência: {self.assistotal}")
-        self.sau.configure(text=f"Saúde: {self.saudetotal}")
         self.educ.configure(text=f"Educação: {self.eductotal}")
 
     def botao(self):
